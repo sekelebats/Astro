@@ -1,0 +1,73 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  author?: string;
+  date?: string;
+  category?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { title, description, author, date, category, image, canonical } = Astro.props;
+const currentUrl = canonical || Astro.url.href;
+const siteUrl = Astro.site || 'https://modernblog.com';
+const ogImage = image || `${siteUrl}/og-image.jpg`;
+---
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>{title} | ModernBlog</title>
+  <meta name="title" content={`${title} | ModernBlog`}>
+  <meta name="description" content={description}>
+  <meta name="author" content={author || "ModernBlog"}>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href={currentUrl}>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content={currentUrl}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:site_name" content="ModernBlog">
+  {date && <meta property="article:published_time" content={date}>}
+  {author && <meta property="article:author" content={author}>}
+  {category && <meta property="article:section" content={category}>}
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content={currentUrl}>
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style is:global>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background: white;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <slot />
+</body>
+</html>

@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://modernblog.com', // Ganti dengan domain Anda
+  site: 'https://modernblog.com',
   output: 'static',
-  build: {
-    format: 'directory'
-  }
+  markdown: {
+    shikiConfig: {
+      theme: 'github-light',
+    },
+  },
 });
